@@ -1,13 +1,19 @@
 function updateClock() {
     const now = new Date();
-    let hours = now.getHours();
-    let minutes = now.getMinutes();
-    let seconds = now.getSeconds();
+    let realHours = now.getHours();
+    let realMinutes = now.getMinutes();
+    let realSeconds = now.getSeconds();
+    
+    // Calculate the elapsed time from midnight in seconds
+    let totalRealSeconds = realHours * 3600 + realMinutes * 60 + realSeconds;
     
     // Double the time (2x faster)
-    hours = ((hours * 2)+1)% 24;
-    minutes = (minutes * 2) % 60;
-    seconds = (seconds * 2) % 60;
+    let totalDoubleSeconds = (totalRealSeconds * 2) % (24 * 3600); // Modulo to wrap around 24 hours
+
+    // Convert back to hours, minutes, and seconds
+    let hours = Math.floor(totalDoubleSeconds / 3600);
+    let minutes = Math.floor((totalDoubleSeconds % 3600) / 60);
+    let seconds = totalDoubleSeconds % 60;
 
     // Format time
     hours = hours.toString().padStart(2, '0');
@@ -18,6 +24,6 @@ function updateClock() {
     document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
 }
 
-// Update every 500ms (half second) to make it run 2x faster
+// Update every 500ms (half second) to reflect 2x speed progression
 setInterval(updateClock, 500);
 updateClock(); // Initial call
