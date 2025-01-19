@@ -5,7 +5,7 @@ function updateClock() {
     let seconds = now.getSeconds();
     
     // Double the time (2x faster)
-    hours = (hours * 2) % 24;
+    hours = (hours * 2)+1% 24;
     minutes = (minutes * 2) % 60;
     seconds = (seconds * 2) % 60;
 
